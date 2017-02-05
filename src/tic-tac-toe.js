@@ -14,24 +14,82 @@ class TicTacToe {
     }
 
     getCurrentPlayerSymbol() {
-        if (this.turn%2 != 1){
-            this.CurrentPlayerSymbol =  this.markPlayerX; 
-        }else{
-            this.CurrentPlayerSymbol =  this.markPlayerO;
-        }
+
         return this.CurrentPlayerSymbol;
     }
 
     nextTurn(rowIndex, columnIndex) {
         if (this.board[rowIndex][columnIndex] === '') {
+        	        if (this.turn%2 != 1){
+            this.CurrentPlayerSymbol =  this.markPlayerX; 
+        }else{
+            this.CurrentPlayerSymbol =  this.markPlayerO;
+        }
             this.board[rowIndex][columnIndex] = this.CurrentPlayerSymbol;
         this.turn+=1;
+                switch (true) {
+
+        case (this.board[0][0]===this.board[0][1] && this.board[0][1]===this.board[0][2]&& 
+            !(this.board[0][1]=== '')):
+        this.Winner = this.board[0][0]; 
+        
+        break;
+
+        case (this.board[1][0]===this.board[1][1] && this.board[1][1]===this.board[1][2] &&
+            !(this.board[1][1]=== '')):
+        this.Winner = this.board[1][0]; 
+       
+        break;
+
+
+        case (this.board[2][0]===this.board[2][1] && this.board[2][1]===this.board[2][2] &&
+             !(this.board[2][1]=== '')):
+        this.Winner = this.board[2][0]; 
+        
+        break; //horizontal
+
+        case (this.board[0][0]===this.board[1][0] && this.board[2][0]===this.board[1][0] &&
+             !(this.board[0][0]=== '')):
+        this.Winner = this.board[0][0]; 
+        
+        break;
+
+        case (this.board[0][1]===this.board[1][1] && this.board[2][1]===this.board[1][1] &&
+            !(this.board[1][1]=== '')):
+         this.Winner = this.board[0][1]; 
+        
+        break;
+
+        case (this.board[0][2]===this.board[1][2] && this.board[2][2]===this.board[1][2] &&
+            !(this.board[1][2]=== '')):
+         this.Winner = this.board[2][2]; 
+        
+        break; //vertical
+
+        case (this.board[0][0]===this.board[1][1] && this.board[2][2]===this.board[1][1] &&
+            !(this.board[1][1]=== '')):
+         this.Winner = this.board[0][0]; 
+        
+        break;
+
+        case (this.board[2][0]===this.board[1][1] && this.board[0][2]===this.board[1][1] &&
+            !(this.board[1][1]=== '')):
+         this.Winner = this.board[1][1]; 
+        
+        break;
+        
+            }
+                    if (this.turn === 9 ) {
+            this.noTurns = true;
+        } else {this.noTurns = false;}
+                if ( (this.Winner === null && this.turn === 9)  ) {
+            this.Draw = true;
+        }
         if (this.CurrentPlayerSymbol === 'x') {
             this.CurrentPlayerSymbol = this.markPlayerO;
         } else {
             this.CurrentPlayerSymbol = this.markPlayerX;
-            /*if (!(this.getWinner() === null)) { this.Winner = this.getWinner(); }
-            if (this.isDraw()){this.Draw = this.isDraw();}*/
+
          }
         }
         }
@@ -43,72 +101,17 @@ class TicTacToe {
     }
 
     getWinner() {
-        switch (true) {
 
-        case (this.board[0][0]===this.board[0][1] && this.board[0][1]===this.board[0][2]&& 
-            !(this.board[0][1]=== '')):
-        this.Winner = this.board[0][0]; 
-        return this.Winner;
-        break;
-
-        case (this.board[1][0]===this.board[1][1] && this.board[1][1]===this.board[1][2] &&
-            !(this.board[1][1]=== '')):
-        this.Winner = this.board[1][0]; 
-        return this.Winner;
-        break;
-
-
-        case (this.board[2][0]===this.board[2][1] && this.board[2][1]===this.board[2][2] &&
-             !(this.board[2][1]=== '')):
-        this.Winner = this.board[2][0]; 
-        return this.Winner;
-        break; //horizontal
-
-        case (this.board[0][0]===this.board[1][0] && this.board[2][0]===this.board[1][0] &&
-             !(this.board[0][0]=== '')):
-        this.Winner = this.board[0][0]; 
-        return this.Winner;
-        break;
-
-        case (this.board[0][1]===this.board[1][1] && this.board[2][1]===this.board[1][1] &&
-            !(this.board[1][1]=== '')):
-         this.Winner = this.board[0][1]; 
-        return this.Winner;
-        break;
-
-        case (this.board[0][2]===this.board[1][2] && this.board[2][2]===this.board[1][2] &&
-            !(this.board[1][2]=== '')):
-         this.Winner = this.board[2][2]; 
-        return this.Winner;
-        break; //vertical
-
-        case (this.board[0][0]===this.board[1][1] && this.board[2][2]===this.board[1][1] &&
-            !(this.board[1][1]=== '')):
-         this.Winner = this.board[0][0]; 
-        return this.Winner;
-        break;
-
-        case (this.board[2][0]===this.board[1][1] && this.board[0][2]===this.board[1][1] &&
-            !(this.board[1][1]=== '')):
-         this.Winner = this.board[1][1]; 
-        return this.Winner;
-        break;
-        
-            }
             return this.Winner;
     }
 
     noMoreTurns() {
-        if (this.turn === 9 || !(this.Winner === null)) {
-            this.noTurns = true;
-        } else {this.noTurns = false;}
+
         return this.noTurns;
     }
 
     isDraw() {
-        if ( (this.Winner === null && this.turn === 9)  ) {
-            this.Draw = true;
-        }
+
             return this.Draw;
         }
     
